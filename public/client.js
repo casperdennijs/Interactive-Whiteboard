@@ -16,5 +16,17 @@ socket.on('chat message', function(msg) {
     var item = document.createElement('li');
     item.textContent = msg;
     messages.appendChild(item);
-    window.scrollTo(0, document.body.scrollHeight);
+    messages.scrollTop = messages.scrollHeight;
 });
+
+function username() {
+    let text;
+    let nickname = prompt("Name:", "");
+    if (nickname == null || nickname == "") {
+        text = "User cancelled the prompt.";
+    } else {
+        socket.emit('send-nickname', nickname);
+    }
+}
+
+username();

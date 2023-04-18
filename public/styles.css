@@ -22,6 +22,7 @@ body {
     align-items: center;
     background-image: url("./assets/images/background.jpg");
     background-size: cover;
+    font-family: 'Open Sans', sans-serif;
 }
 
 main {
@@ -54,8 +55,8 @@ main .chat-container {
 }
 
 main .chat-container .chat {
-    min-height: calc(568px - 56px);
-    height: 100%;
+    height: calc(568px - 56px);
+    overflow-y: auto;
     display: inline-block;
     background: rgba(0 0 0 / 25%);
     list-style: none;
