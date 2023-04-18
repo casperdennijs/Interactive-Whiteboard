@@ -39,3 +39,6 @@ Real time web project
 │            │ Update chat      │            │
 └────────────┘ ◄─────────────── └────────────┘
 ```
+
+## Bronnen
+- Background: https://www.wallpaperflare.com/black-and-white-character-print-poster-doodle-artwork-sketches-wallpaper-mgc
