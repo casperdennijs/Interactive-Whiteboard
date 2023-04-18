@@ -1,5 +1,5 @@
-# guessthedrawing
-Real time web project
+# Guess The First
+Raad als eerste het woord en win de ronde!
 
 ## Basis data flow
 ```
