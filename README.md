@@ -1,5 +1,5 @@
-# guessthedrawing
-Real time web project
+# Guess The First
+Raad als eerste het woord en win de ronde!
 
 ## Basis data flow
 ```
@@ -39,3 +39,6 @@ Real time web project
 │            │ Update chat      │            │
 └────────────┘ ◄─────────────── └────────────┘
 ```
+
+## Bronnen
+- Background: https://www.wallpaperflare.com/black-and-white-character-print-poster-doodle-artwork-sketches-wallpaper-mgc
