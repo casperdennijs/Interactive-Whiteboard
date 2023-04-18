@@ -2,6 +2,7 @@
 Real time web project
 
 ## Basis data flow
+```
                                 ┌────────────┐
                                 │            │
                                 │ Custom API │
@@ -37,3 +38,4 @@ Real time web project
 │            │                  │            │
 │            │ Update chat      │            │
 └────────────┘ ◄─────────────── └────────────┘
+```
