@@ -21,13 +21,14 @@ io.on('connection', (socket) => {
     socket.on('disconnect', () => {
         console.log('user disconnected');
     });
+});
+
+io.on('connection', (socket) => {
     socket.on('send-nickname', (nickname) => {
         socket.nickname = nickname;
         io.emit("send-nickname", socket.nickname);
     });
 });
-
-
 
 io.on('connection', (socket) => {
     socket.on('chat message', (msg) => {
