@@ -1,0 +1,23 @@
+{
+  "name": "guessthedrawing",
+  "version": "1.0.0",
+  "description": "Real time web project",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/casperdennijs/guessthedrawing.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/casperdennijs/guessthedrawing/issues"
+  },
+  "homepage": "https://github.com/casperdennijs/guessthedrawing#readme",
+  "dependencies": {
+    "express": "^4.18.2",
+    "socket.io": "^4.6.1"
+  }
+}
