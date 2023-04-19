@@ -32,6 +32,11 @@ io.on('connection', (socket) => {
 
 io.on('connection', (socket) => {
     socket.on('chat message', (msg) => {
-        io.emit('chat message', socket.nickname + ": " + msg);
+        const time = new Date();
+        const hours = time.getHours();
+        const minutes = time.getMinutes();
+        const minutesConverted = ('0' + minutes).slice(-2)
+
+        io.emit('chat message', "[" + hours + ":" + minutesConverted + "] " + socket.nickname + ": " + msg);
     });
 });
