@@ -19,7 +19,13 @@ server.listen(port, () => {
 io.on('connection', (socket) => {
     console.log('a user connected');
 
-    socket.on('drawing', (data) => socket.broadcast.emit('drawing', data));
+    socket.on('coord',(data)=>{
+        socket.broadcast.emit('coordStart',data)
+    })
+
+    socket.on('draw',(data)=>{
+        socket.broadcast.emit('draw',data)
+    })
 
     socket.on('disconnect', () => {
         console.log('user disconnected');
