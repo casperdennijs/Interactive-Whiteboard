@@ -3,7 +3,7 @@
 (function() {
   var canvas = document.getElementsByClassName('whiteboard')[0];
   var colors = document.getElementsByClassName('color');
-  var strokes = document.querySelectorAll(".stroke");
+  var strokes = document.getElementsByClassName('stroke');
   var context = canvas.getContext('2d');
 
   var current = {
@@ -27,18 +27,22 @@
     colors[i].addEventListener('click', onColorUpdate, false);
   }
 
+  for (var i = 0; i < strokes.length; i++){
+    console.log("hoi")
+    strokes[i].addEventListener('click', onStrokeUpdate, false);
+  }
+
   socket.on('drawing', onDrawingEvent);
 
   window.addEventListener('resize', onResize, false);
   onResize();
 
-
-  function drawLine(x0, y0, x1, y1, color, emit){
+  function drawLine(x0, y0, x1, y1, color, stroke, emit){
     context.beginPath();
     context.moveTo(x0, y0);
     context.lineTo(x1, y1);
     context.strokeStyle = color;
-    context.lineWidth = current.stroke;
+    context.lineWidth = stroke;
     context.stroke();
     context.closePath();
 
@@ -51,7 +55,8 @@
       y0: y0 / h,
       x1: x1 / w,
       y1: y1 / h,
-      color: color
+      color: color,
+      stroke: stroke
     });
   }
 
@@ -64,18 +69,34 @@
   function onMouseUp(e){
     if (!drawing) { return; }
     drawing = false;
-    drawLine(current.x, current.y, e.clientX||e.touches[0].clientX, e.clientY||e.touches[0].clientY, current.color, true);
+    drawLine(current.x, current.y, e.clientX||e.touches[0].clientX, e.clientY||e.touches[0].clientY, current.color, current.stroke, true);
   }
 
   function onMouseMove(e){
     if (!drawing) { return; }
-    drawLine(current.x, current.y, e.clientX||e.touches[0].clientX, e.clientY||e.touches[0].clientY, current.color, true);
+    drawLine(current.x, current.y, e.clientX||e.touches[0].clientX, e.clientY||e.touches[0].clientY, current.color, current.stroke, true);
     current.x = e.clientX||e.touches[0].clientX;
     current.y = e.clientY||e.touches[0].clientY;
   }
 
   function onColorUpdate(e){
     current.color = e.target.className.split(' ')[1];
+  }
+
+  function onStrokeUpdate(e){
+    console.log(e.target.className)
+    if (e.target.className === "stroke medium") {
+        current.stroke = 4;
+    } else if (e.target.className === "stroke large") {
+        current.stroke = 8;
+    } else if (e.target.className === "stroke big") {
+        current.stroke = 16;
+    } else if (e.target.className === "stroke huge") {
+        current.stroke = 32;
+    } else {
+        current.stroke = 2;
+        console.log("test")
+    }
   }
 
   // limit the number of events per second
@@ -94,7 +115,7 @@
   function onDrawingEvent(data){
     var w = canvas.width;
     var h = canvas.height;
-    drawLine(data.x0 * w, data.y0 * h, data.x1 * w, data.y1 * h, data.color);
+    drawLine(data.x0 * w, data.y0 * h, data.x1 * w, data.y1 * h, data.color, data.stroke);
   }
 
   // make the canvas fill its parent
@@ -102,12 +123,6 @@
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
   }
-
-  strokes[0].addEventListener("click", () => { current.stroke = 2; });
-  strokes[1].addEventListener("click", () => { current.stroke = 4; });
-  strokes[2].addEventListener("click", () => { current.stroke = 6; });
-  strokes[3].addEventListener("click", () => { current.stroke = 10; });
-  strokes[4].addEventListener("click", () => { current.stroke = 16; });
 })();
 
 const button = document.querySelector(".chat-button");
