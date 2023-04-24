@@ -75,7 +75,7 @@ html, body {
     overflow: auto;
 }
 
-.color-selector {
+.color-selector, .stroke-selector {
     position: absolute;
     top: 20px;
     left: 20px;
@@ -89,10 +89,15 @@ html, body {
     border-radius: 200px;
     opacity: .5;
     transition: .5s;
+    align-items: center;
 }
 
-.color-selector:hover {
+.color-selector:hover, .stroke-selector:hover {
     opacity: 1;
+}
+
+.stroke-selector {
+    left: 120px;
 }
 
 .color {
@@ -101,6 +106,13 @@ html, body {
     border-radius: 5px;
     cursor: pointer;
     border: none;
+}
+
+.stroke {
+    background-color: black;
+    border-radius: 100%;
+    border: none;
+    cursor: pointer;
 }
 
 .black { background-color: black; }
@@ -114,7 +126,13 @@ html, body {
 .brown { background-color: brown; }
 .white { background-color: white; border: 1px solid black; }
 
-.color-icon {
+.small { height: 10px; width: 10px; }
+.medium { height: 20px; width: 20px; }
+.large { height: 30px; width: 30px; }
+.big { height: 40px; width: 40px; }
+.huge { height: 50px; width: 50px; }
+
+.color-icon, .stroke-icon {
     box-sizing: border-box;
     height: 32px;
     width: 32px;

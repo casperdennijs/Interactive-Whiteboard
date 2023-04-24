@@ -3,10 +3,12 @@
 (function() {
   var canvas = document.getElementsByClassName('whiteboard')[0];
   var colors = document.getElementsByClassName('color');
+  var strokes = document.querySelectorAll(".stroke");
   var context = canvas.getContext('2d');
 
   var current = {
-    color: 'black'
+    color: 'black',
+    stroke: 2
   };
   var drawing = false;
 
@@ -36,7 +38,7 @@
     context.moveTo(x0, y0);
     context.lineTo(x1, y1);
     context.strokeStyle = color;
-    context.lineWidth = 2;
+    context.lineWidth = current.stroke;
     context.stroke();
     context.closePath();
 
@@ -101,6 +103,11 @@
     canvas.height = window.innerHeight;
   }
 
+  strokes[0].addEventListener("click", () => { current.stroke = 2; });
+  strokes[1].addEventListener("click", () => { current.stroke = 4; });
+  strokes[2].addEventListener("click", () => { current.stroke = 6; });
+  strokes[3].addEventListener("click", () => { current.stroke = 10; });
+  strokes[4].addEventListener("click", () => { current.stroke = 16; });
 })();
 
 const button = document.querySelector(".chat-button");
