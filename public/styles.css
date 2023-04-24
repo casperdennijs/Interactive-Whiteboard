@@ -74,3 +74,48 @@ html, body {
     height: 750px;
     overflow: auto;
 }
+
+.color-selector {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: .5rem;
+    padding: 1.5em 1em;
+    background-color: #eaeaea;
+    box-shadow: 0 5px 10px rgba(0,0,0,0.2); 
+    z-index: 5;
+    border-radius: 200px;
+    opacity: .5;
+    transition: .5s;
+}
+
+.color-selector:hover {
+    opacity: 1;
+}
+
+.color {
+    width: 30px;
+    height: 30px;
+    border-radius: 5px;
+    cursor: pointer;
+    border: none;
+}
+
+.black { background-color: black; }
+.red { background-color: red; }
+.blue { background-color: blue; }
+.green { background-color: green; }
+.yellow { background-color: yellow; }
+.orange { background-color: orange; }
+.purple { background-color: purple; }
+.pink { background-color: pink; }
+.brown { background-color: brown; }
+.white { background-color: white; border: 1px solid black; }
+
+.color-icon {
+    box-sizing: border-box;
+    height: 32px;
+    width: 32px;
+}
