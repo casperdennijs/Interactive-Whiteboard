@@ -43,6 +43,7 @@
     context.lineTo(x1, y1);
     context.strokeStyle = color;
     context.lineWidth = stroke;
+    context.lineCap = 'round';
     context.stroke();
     context.closePath();
 
