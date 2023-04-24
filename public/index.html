@@ -10,17 +10,27 @@
 </head>
 <body>
     <main>
-        <div class="drawing-container">
-            <canvas class="whiteboard"></canvas>
-        </div>
-        <div class="chat-container">
-            <ul class="chat"></ul>
-            <form class="chat-input">
-                <input type="text">
-                <input type="submit" value="Versturen">
-            </form>
-        </div>
+        <canvas class="whiteboard"></canvas>
     </main>
+    <aside>
+        <div class="chat-container">
+            <button class="chat-button"></button>
+            <div class="chat">
+                <div class="chat-header">
+                    <h3>Chat</h3>
+                </div>
+                <div class="chat-body">
+                    <ul class="chat-messages"></ul>
+                </div>
+                <div class="chat-footer">
+                    <form id="chat-form">
+                        <input id="msg" type="text" placeholder="Enter Message" required autocomplete="off">
+                        <button class="btn">Send</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </aside>
     <script src="/socket.io/socket.io.js"></script>
     <script src="client.js"></script>
     <script src="sketch.js"></script>

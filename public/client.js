@@ -1,8 +1,8 @@
 var socket = io();
 
-var messages = document.querySelector('.chat');
-var form = document.querySelector('form');
-var input = document.querySelector('input');
+var messages = document.querySelector('.chat-messages');
+var form = document.querySelector('#chat-form');
+var input = document.querySelector('#chat-form input');
 
 form.addEventListener('submit', function(e) {
     e.preventDefault();

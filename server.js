@@ -18,15 +18,6 @@ server.listen(port, () => {
 
 io.on('connection', (socket) => {
     console.log('a user connected');
-
-    socket.on('coord',(data)=>{
-        socket.broadcast.emit('coordStart',data)
-    })
-
-    socket.on('draw',(data)=>{
-        socket.broadcast.emit('draw',data)
-    })
-
     socket.on('disconnect', () => {
         console.log('user disconnected');
     });
@@ -48,4 +39,8 @@ io.on('connection', (socket) => {
 
         io.emit('chat message', "[" + hours + ":" + minutesConverted + "] " + socket.nickname + ": " + msg);
     });
+});
+
+io.on('connection', (socket) => {
+    socket.on('drawing', (data) => socket.broadcast.emit('drawing', data));
 });
