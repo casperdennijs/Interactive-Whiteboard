@@ -137,3 +137,16 @@ html, body {
     height: 32px;
     width: 32px;
 }
+
+#pointers {
+    position: relative;
+}
+
+#pointers .pointer {
+    position: absolute;
+    width: 15px;
+    height: 22px;
+    background: url("https://uploads.codesandbox.io/uploads/user/88acfe5a-77fc-498c-98ee-d1b0b303f6a8/tC4n-pointer.png")
+    no-repeat -4px 0;
+    z-index: 20;
+}
