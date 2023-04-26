@@ -3,7 +3,14 @@ const app = express();
 const http = require('http');
 const server = http.createServer(app);
 const { Server } = require("socket.io");
-const io = new Server(server);
+const io = new Server(server, {
+    cors: {
+      origin: "https://wb.up.railway.app",
+      // or with an array of origins
+      // origin: ["https://my-frontend.com", "https://my-other-frontend.com", "http://localhost:3000"],
+      credentials: true
+    }
+});
 const port = process.env.PORT || 4242;
 
 const clients = {};
