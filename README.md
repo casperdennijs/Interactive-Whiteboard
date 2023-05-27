@@ -1,4 +1,4 @@
-# Interactive Whiteboard (Real time web)
+# Interactive Whiteboard (Real Time Web)
 ![iw logo](https://github.com/casperdennijs/Interactive-Whiteboard/assets/56598338/15e7664e-6882-443d-8207-d75a0d2f59ea)
 
 ## Inhoudsopgave
@@ -303,7 +303,8 @@ function checkOffline() {
 setInterval(checkOffline, 5000);
 ```
 
-#### sketch.js
+#### sketch.js (bron van inspiratie: https://socket.io/demos/whiteboard/)
+Ik begin allereerst weer met het opstellen van wat variabelen en eventlisteners waarmee tekenen met de muis mogelijk worden gemaakt en waarbij je kleur en dikte kan kiezen.
 ```JS
 var canvas = document.getElementsByClassName('whiteboard')[0];
 var colors = document.getElementsByClassName('color');
@@ -330,6 +331,7 @@ for (var i = 0; i < strokes.length; i++){
 }
 ```
 
+Vervolgens wordt hier de logica van het tekenen uitgewerkt, dus waar de lijn moet beginnen en waar die moet eindigen, hoe dik deze lijn moet zijn en welke kleur het moet worden. Deze lijnen worden dan wanneer de muisknop losgelaten is als context geplaatst op de canvas van de website.
 ```JS
 socket.on('drawing', onDrawingEvent);
 
@@ -361,6 +363,7 @@ function drawLine(x0, y0, x1, y1, color, stroke, emit){
 }
 ```
 
+Hier zie je alle logica die gebeuren wanneer de event listeners uitgevoerd worden. Bij het indrukken van de muisknop wordt er aangegeven dat er getekend wordt en wordt de X en Y coordinaten meegenomen naar de logica van het tekenen zelf. Bij het bewegen van de muis wordt vervolgens zelf de de teken functie uitgevoerd waarin de huidige coordinaten van de muis gebruikt wordt om aan te geven waar de lijn terecht moet komen. Daarnaast zijn de color en stroke functies er om de juiste kleur en dikte aan de lijn te geven wanneer iemand dit in het menu heeft aangepast.
 ```JS
 function onMouseDown(e){
     drawing = true;
@@ -402,6 +405,7 @@ function onStrokeUpdate(e){
  }
 ```
 
+Hier onder staan nog een paar overgebleven functies zoals de throttle, hiermee wordt er gezorgd dat er een limiet zit op de aantal events die meegestuurd kunnen worden. Een teken event stuurt namelijk bijvoorbeeld enorm veel events mee en dat kan zwaar zijn. Ook wordt bij de overige event gekeken naar de canvas grootte, zodat deze altijd net groot is al het scherm zelf.
 ```JS
 function throttle(callback, delay) {
     var previousCall = new Date().getTime();
@@ -425,15 +429,10 @@ function onResize() {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
 }
-
-const button = document.querySelector(".chat-button");
-const chat = document.querySelector(".chat-container");
-button.addEventListener("click", () => {    
-    chat.classList.toggle("toggle");
-})
 ```
 
-#### mouse.js
+#### mouse.js (bron van inspiratie: https://codesandbox.io/s/0wlo27k1v)
+Ook hier beginnen we allereerst met een aantal variabelen op te stellen. Met een functie die de huidige tijd ophaalt.
 ```JS
 let prev = {};
 let canvas = document.getElementsByClassName("whiteboard")[0];
@@ -452,11 +451,11 @@ function now() {
 let lastEmit = now();
 ```
 
+Hier beginnen we met kijken waar de muis zich momenteel bevind, bij beweging worden de X en Y coordinaten mee genomen. Deze worden vervolgens weer mee gestuurd via sockets.
 ```JS
 canvas.onmouseup = canvas.onmousemove = canvas.onmousedown = function(e) {
   switch (e.type) {
     case "mouseup":
-      drawing = false;
       break;
 
     case "mousemove":
@@ -468,9 +467,6 @@ canvas.onmouseup = canvas.onmousemove = canvas.onmousedown = function(e) {
       break;
 
     case "mousedown":
-      drawing = true;
-      prev.x = e.pageX;
-      prev.y = e.pageY;
       break;
 
     default:
@@ -479,6 +475,7 @@ canvas.onmouseup = canvas.onmousemove = canvas.onmousedown = function(e) {
 };
 ```
 
+Hier is de logica wanneer de data meegestuurd word. Vervolgens worden er pointers aangemaakt voor ieder andere gebruiker (jezelf niet) en worden de posities gebaseerd op de gebruikers X en Y coordinaten van de muis. Wanneer een gebruiker weer weggaat, wordt de pointer verwijderd en wordt er niet meer bijgehouden waar die zich bevindt.
 ```JS
 socket.on("moving", function(data) {
   if (!clients.hasOwnProperty(data.id)) {
@@ -501,4 +498,7 @@ socket.on("clientdisconnect", function(id) {
 ```
 
 ## Bronnen
-- Background: https://www.wallpaperflare.com/black-and-white-character-print-poster-doodle-artwork-sketches-wallpaper-mgc
+- Chat in socket.io: https://socket.io/get-started/chat
+- Whiteboard in socket.io: https://socket.io/demos/whiteboard/
+- Cursors in socket.io: https://codesandbox.io/s/0wlo27k1v
+- Giphy API: https://developers.giphy.com/ / https://api.giphy.com/v1/gifs/random
