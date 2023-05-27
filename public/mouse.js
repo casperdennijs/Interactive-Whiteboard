@@ -1,19 +1,13 @@
 window.onload = function() {
-    const url = window.location.origin;
     let prev = {};
     let canvas = document.getElementsByClassName("whiteboard")[0];
-    let context = canvas.getContext("2d");
     let pointerContainer = document.getElementById("pointers");
   
     let pointer = document.createElement("div");
     pointer.setAttribute("class", "pointer");
   
-    let drawing = false;
     let clients = {};
     let pointers = {};
-  
-    function drawLine() {
-    }
   
     function now() {
       return new Date().getTime();
@@ -31,18 +25,10 @@ window.onload = function() {
           // if (now() - lastEmit > 50) {
           socket.emit("mousemove", {
             x: e.pageX,
-            y: e.pageY,
-            drawing: drawing
+            y: e.pageY
           });
           lastEmit = now();
           // }
-  
-          if (drawing) {
-            drawLine(prev.x, prev.y, e.pageX, e.pageY);
-  
-            prev.x = e.pageX;
-            prev.y = e.pageY;
-          }
           break;
   
         case "mousedown":
@@ -63,10 +49,6 @@ window.onload = function() {
   
       pointers[data.id].style.left = data.x + "px";
       pointers[data.id].style.top = data.y + "px";
-  
-      if (data.drawing && clients[data.id]) {
-        drawLine(clients[data.id].x, clients[data.id].y, data.x, data.y);
-      }
   
       clients[data.id] = data;
       clients[data.id].updated = now();

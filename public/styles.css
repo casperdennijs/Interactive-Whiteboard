@@ -7,6 +7,7 @@ html, body {
     margin: 0;
     padding: 0;
     overflow: hidden;
+    font-family: 'Open Sans', sans-serif;
 }
   
 .whiteboard {
@@ -138,15 +139,90 @@ html, body {
     width: 32px;
 }
 
-#pointers {
-    position: relative;
-}
-
-#pointers .pointer {
+.pointer {
     position: absolute;
-    width: 15px;
-    height: 22px;
-    background: url("https://uploads.codesandbox.io/uploads/user/88acfe5a-77fc-498c-98ee-d1b0b303f6a8/tC4n-pointer.png")
-    no-repeat -4px 0;
+    background: black;
+    width: 10px;
+    height: 10px;
+    border-radius: 10px;
+    transform: translate(-50%, -50%);
     z-index: 20;
 }
+
+.chat-messages img {
+    max-width: 100%;
+}
+
+.warn {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: rgba(255,255,255,0.2);
+    backdrop-filter: blur(5px);
+    z-index: 100;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.warn p {
+    margin: 0;
+}
+
+.warn p:first-child {
+    font-size: 3rem;
+    font-weight: 900;
+}
+
+.warn p:last-child {
+    font-size: 1.5rem;
+}
+
+.offline {
+    display: flex;
+}
+
+.lds-ring {
+    margin-top: 1rem;
+    display: inline-block;
+    position: relative;
+    width: 80px;
+    height: 80px;
+}
+
+.lds-ring div {
+    box-sizing: border-box;
+    display: block;
+    position: absolute;
+    width: 64px;
+    height: 64px;
+    margin: 8px;
+    border: 8px solid #000;
+    border-radius: 50%;
+    animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+    border-color: #000 transparent transparent transparent;
+}
+
+.lds-ring div:nth-child(1) {
+    animation-delay: -0.45s;
+}
+ 
+.lds-ring div:nth-child(2) {
+    animation-delay: -0.3s;
+}
+
+.lds-ring div:nth-child(3) {
+    animation-delay: -0.15s;
+}
+
+  @keyframes lds-ring {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }

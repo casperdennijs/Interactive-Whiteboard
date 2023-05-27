@@ -25,9 +25,13 @@ server.listen(port, () => {
     console.log('listening on *:' + port);
 });
 
+const historySize = 50
+let history = []
+
 const addClient = socket => {
     console.log("New client connected", socket.id);
     clients[socket.id] = socket;
+    socket.emit('history', history);
 };
 const removeClient = socket => {
     console.log("Client disconnected", socket.id);
@@ -39,24 +43,36 @@ io.on('connection', (socket) => {
         socket.nickname = nickname;
         io.emit("send-nickname", socket.nickname);
     });
-});
 
-io.on('connection', (socket) => {
     socket.on('chat message', (msg) => {
         const time = new Date();
         const hours = time.getHours();
         const minutes = time.getMinutes();
         const minutesConverted = ('0' + minutes).slice(-2)
+        const timeMsg = "[" + hours + ":" + minutesConverted + "] "
 
-        io.emit('chat message', "[" + hours + ":" + minutesConverted + "] " + socket.nickname + ": " + msg);
+        while (history.length > historySize) {
+            history.shift();
+        }
+        history.push({timeMsg: timeMsg, username: socket.nickname, msg: msg});
+
+        if (msg === "/giphy") {
+            const url = "https://api.giphy.com/v1/gifs/random?api_key=giv4hiAN7jhHNgdvONNAxFSXT67jScXY&tag=&rating=g";
+            fetch(url)
+                .then(response => {
+                    return response.json();
+                })
+                .then(data => {
+                    console.log(data.data.id);
+                    io.emit('gif message', {timeMsg: timeMsg, username: socket.nickname, gif: data.data.id}); 
+                })
+        } else {
+            io.emit('chat message', {timeMsg: timeMsg, username: socket.nickname, msg: msg});
+        }
     });
-});
 
-io.on('connection', (socket) => {
     socket.on('drawing', (data) => socket.broadcast.emit('drawing', data));
-});
 
-io.on("connection", (socket) => {
     let id = socket.id;
   
     addClient(socket);
