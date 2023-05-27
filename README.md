@@ -196,5 +196,112 @@ io.on('connection', (socket) => {
 });
 ```
 
+#### Node-fetch
+Ik heb de npm package Node-fetch gebruikt om server sided de API data op te halen die vervolgens naar iedereen mee gestuurd wordt om ervoor te zorgen dat de gif in chat te zien zal zijn. Ik hiervoor een kleine standaard fetch gebruikt waarbij ik alle data ophaal en dan alleen de id meegeef naar de client side.
+```JS
+const url = "https://api.giphy.com/v1/gifs/random?api_key=giv4hiAN7jhHNgdvONNAxFSXT67jScXY&tag=&rating=g";
+    fetch(url)
+      .then(response => {
+          return response.json();
+      })
+      .then(data => {
+          console.log(data.data.id);
+          io.emit('gif message', {timeMsg: timeMsg, username: socket.nickname, gif: data.data.id}); 
+      })
+```
+
+### Client side
+#### client.js
+In dit bestand begin ik allereerst met het aanroepen van socket en een aantal variabelen aan te maken.
+```JS
+var socket = io();
+
+var messages = document.querySelector('.chat-messages');
+var form = document.querySelector('#chat-form');
+var input = document.querySelector('#chat-form input');
+var warning = document.querySelector('.warn')
+
+let messageHistory = [];
+```
+
+Vervolgens ben ik bezig geweest met de logica van de chat functies, zoals het versturen, opslaan en het oproepen van oude berichten bij pagina binnenkomst
+```JS
+// Event voor het versturen van een bericht
+form.addEventListener('submit', function(e) {
+    e.preventDefault();
+    if (input.value) {
+        socket.emit('chat message', input.value);
+        input.value = '';
+    }
+});
+
+// Verstuurde bericht aanmaken en meenemen in de chatgeschiedenis
+socket.on('chat message', function(msg) {
+    addMessage(msg);
+    messageHistory.push({timeMsg: msg.timeMsg, username: msg.username, msg: msg.msg});
+});
+
+// Verstuurde gif aanmaken en meenemen in de chatgeschiedenis (gif wordt niet getoond in geschiedenis, maar je ziet dan /giphy in chat)
+socket.on('gif message', function(gif) {
+    addGif(gif);
+    messageHistory.push({timeMsg: msg.timeMsg, username: msg.username, msg: gif.gif});
+});
+
+// Alle opgeslagen berichten bij binnenkomst in de chat weergeven (max 50 berichten)
+socket.on('history', (history) => {
+    messageHistory = history;
+    messageHistory.forEach((msg) => {
+        addMessage(msg)
+    });
+});
+
+// Functie die de berichten aan de voorkant laten tonen
+function addMessage(msg) {
+    var item = document.createElement('li');
+    item.textContent = msg.timeMsg + msg.username + ": " + msg.msg;
+    messages.appendChild(item);
+    messages.scrollTop = messages.scrollHeight;
+}
+
+// Functie die gifs aan de voorkant laten tonen
+function addGif(gif) {
+    var item = document.createElement('li');
+    var img = document.createElement('img');
+    item.textContent = gif.timeMsg + gif.username + ":";
+    img.src = "https://i.giphy.com/media/" + gif.gif + "/giphy.webp";
+    messages.appendChild(item);
+    messages.appendChild(img);
+    messages.scrollTop = messages.scrollHeight;
+}
+```
+
+Ook vraag ik bij binnenkomst van de website eerst naar een nickname, hiermee kunnen mensen zichzelf mee identificeren in de chat. Dit heb ik gedaan doormiddel van een prompt met een invoerveld.
+```JS
+function username() {
+    let text;
+    let nickname = prompt("Name:", "");
+    if (nickname == null || nickname == "") {
+        text = "User cancelled the prompt.";
+    } else {
+        socket.emit('send-nickname', nickname);
+    }
+}
+username();
+```
+
+En kijk ik of een socket connectie nog levend is, dit heeft voornamelijk met iemand zijn internet te maken. Wanneer iemand geen connectie meer heeft komt een waarschuwing naar voren die pas weer weggaat wanneer de connectie hersteld is. Deze functie wordt elke 5 seconden aangeroepen om te kijken naar de connectie.
+```JS
+function checkOffline() {
+    if (socket.connected) {
+        console.log("Online")
+        warning.classList.remove("offline");
+    } else {
+        console.log("Offline")
+        warning.classList.add("offline");
+    }
+}
+setInterval(checkOffline, 5000);
+```
+
 ## Bronnen
 - Background: https://www.wallpaperflare.com/black-and-white-character-print-poster-doodle-artwork-sketches-wallpaper-mgc
