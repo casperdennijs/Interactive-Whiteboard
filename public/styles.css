@@ -54,6 +54,11 @@ html, body {
     transition: .5s;
 }
 
+.chat-form {
+    width: 100%;
+    display: flex;
+}
+
 .chat-button:hover {
     opacity: 1;
 }
@@ -62,18 +67,42 @@ html, body {
     transform: translateX(0);
 }
 
+.chat-header h3 {
+    font-size: 2em;
+    margin: 0;
+    border-bottom: 1px solid black;
+}
+
 .chat-footer {
     position: absolute;
     left: 0;
     right: 0;
     bottom: 0;
     height: 75px;
-    background-color: blue;
+    background-color: lightgray;
+    padding: 1em;
+    display: flex;
+    width: 100%;
+}
+
+#chat-form {
+    display: flex;
+    width: 100%;
+    gap: 1em;
+}
+
+#chat-form #msg {
+    width: 100%;
 }
 
 .chat-messages {
-    height: 750px;
+    height: 800px;
     overflow: auto;
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5em;
 }
 
 .color-selector, .stroke-selector {

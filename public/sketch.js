@@ -17,18 +17,11 @@
   canvas.addEventListener('mouseout', onMouseUp, false);
   canvas.addEventListener('mousemove', throttle(onMouseMove, 10), false);
   
-  //Touch support for mobile devices
-  canvas.addEventListener('touchstart', onMouseDown, false);
-  canvas.addEventListener('touchend', onMouseUp, false);
-  canvas.addEventListener('touchcancel', onMouseUp, false);
-  canvas.addEventListener('touchmove', throttle(onMouseMove, 10), false);
-
   for (var i = 0; i < colors.length; i++){
     colors[i].addEventListener('click', onColorUpdate, false);
   }
 
   for (var i = 0; i < strokes.length; i++){
-    console.log("hoi")
     strokes[i].addEventListener('click', onStrokeUpdate, false);
   }
 
@@ -100,7 +93,6 @@
     }
   }
 
-  // limit the number of events per second
   function throttle(callback, delay) {
     var previousCall = new Date().getTime();
     return function() {
@@ -119,7 +111,6 @@
     drawLine(data.x0 * w, data.y0 * h, data.x1 * w, data.y1 * h, data.color, data.stroke);
   }
 
-  // make the canvas fill its parent
   function onResize() {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;

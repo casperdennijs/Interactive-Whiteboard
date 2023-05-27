@@ -22,13 +22,11 @@ window.onload = function() {
           break;
   
         case "mousemove":
-          // if (now() - lastEmit > 50) {
           socket.emit("mousemove", {
             x: e.pageX,
             y: e.pageY
           });
           lastEmit = now();
-          // }
           break;
   
         case "mousedown":
