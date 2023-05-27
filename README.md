@@ -1,6 +1,10 @@
 # Interactive Whiteboard (Real Time Web)
 ![iw logo](https://github.com/casperdennijs/Interactive-Whiteboard/assets/56598338/15e7664e-6882-443d-8207-d75a0d2f59ea)
 
+Live versie: https://interactive-whiteboard.adaptable.app
+
+(Let op: Adaptable wil soms de sockets eruit gooien, hierdoor kan undefined als username staan na een korte periode in chat)
+
 ## Inhoudsopgave
 - Introductie
 - Features
