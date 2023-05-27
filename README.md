@@ -497,6 +497,22 @@ socket.on("clientdisconnect", function(id) {
 });
 ```
 
+## Todo
+- [x] Kiezen van wat ik wil maken (opdracht)
+- [x] Basis chat maken met sockets
+- [x] Chat berichten in geschiedenis kunnen opslaan (chatgeschiedenis)
+- [x] Canvas kunnen tekenen
+- [x] Canvas via sockets bij andere updaten
+- [x] Aanpassen van kleur en dikte
+- [x] Kleur en dikte via sockets updaten bij andere
+- [x] API uitkiezen
+- [x] Random gif in de chat kunnen sturen
+- [x] Random gif door andere gezien kunnen worden via sockets
+- [ ] Canvas opslaan en opnieuw tonen bij pagina binnenkomst
+- [ ] Aparte rooms maken met eigen canvas en chat
+- [ ] Nicknames toevoegen aan de cursors om te zien wie wie is
+- [ ] Mobiele support en responsive maken
+
 ## Bronnen
 - Chat in socket.io: https://socket.io/get-started/chat
 - Whiteboard in socket.io: https://socket.io/demos/whiteboard/
