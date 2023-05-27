@@ -1,3 +1,4 @@
+require('dotenv').config()
 const express = require('express');
 const fetch = require('node-fetch');
 const app = express();
@@ -58,7 +59,7 @@ io.on('connection', (socket) => {
         history.push({timeMsg: timeMsg, username: socket.nickname, msg: msg});
 
         if (msg === "/giphy") {
-            const url = "https://api.giphy.com/v1/gifs/random?api_key=giv4hiAN7jhHNgdvONNAxFSXT67jScXY&tag=&rating=g";
+            const url = "https://api.giphy.com/v1/gifs/random?api_key=" + process.env.API_KEY + "&tag=&rating=g";
             fetch(url)
                 .then(response => {
                     return response.json();
